@@ -1,21 +1,27 @@
 <html>
 <head>
 <title>Comment System</title>
+<script src="myJS.js"> </script>
 </head>
 <body>
 <?php
 include('user.php');
 //mysql is magically connected and to the right database (mysqli)
-$database	= new mysqli("localhost","root","","comment_sys");
+$database	= new mysqli("sql304.freewebhost.co.nz","freew_16512938","sakura17","freew_16512938_ocular");
 $user		= new user($database,1);
 $user->getData();
-if(isset($_POST['user_button']) && strlen($_POST['user_input'])>0){
-	$user->setData($_POST['user_input']);
-	header("Location: http://".$_SERVER['SERVER_NAME'].$_SERVER['PHP_SELF']);
+if(isset($_POST['user_button'])){
+	$user_comment = $_POST['user_input'];
+	if(!preg_match("/^[a-zA-Z0-9 ]+$/", $user_comment)) { 
+		echo "<font color='red'> Invalid Comment!</font>";
+    } else {
+		$user->setData($user_comment);
+		header("Location: http://".$_SERVER['SERVER_NAME'].$_SERVER['PHP_SELF']);
+	}
 }
 ?>
-<form action="index.php" method="post">
-	<input type="text" name="user_input" placeholder="comment" /> <br />
+<form action="index.php" method="post" onSubmit="return verifyComment()">
+	<input type="text" name="user_input" placeholder="comment" id="user_input"/> <br />
     <input type="submit" name="user_button" value="Submit" />
 </form>
 </body>
