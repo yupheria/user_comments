@@ -7,7 +7,7 @@
 <?php
 include('user.php');
 //mysql is magically connected and to the right database (mysqli)
-$database	= new mysqli("sql304.freewebhost.co.nz","freew_16512938","sakura17","freew_16512938_ocular");
+$database	= new mysqli("localhost","root","","comment_sys");
 $user		= new user($database,1);
 $user->getData();
 if(isset($_POST['user_button'])){
